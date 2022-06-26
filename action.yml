@@ -74,7 +74,8 @@ runs:
             "${{ inputs.package }}": { "baseline": "${{inputs.package_version}}", "port-version": 0 }
           }
         }' > /tmp/baseline.json
-        jq -rs '.[0] * .[1]' versions/baseline.json /tmp/baseline.json | echo > versions/baseline.json
+        jq -rs '.[0] * .[1]' versions/baseline.json /tmp/baseline.json | echo > /tmp/new_baseline.json
+        mv /tmp/new_baseline.json versions/baseline.json
       shell: bash
       working-directory: "vcpkg-registry"
 
