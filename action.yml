@@ -64,7 +64,7 @@ runs:
     # Add to versions
     - name: Create versions file for the port
       run: |
-        INITIAL=`echo ${{ inputs.package }} | cut -c 0-1`
+        INITIAL=`echo ${{ inputs.package }} | cut -c 1-2`
         mkdir -p versions/$INITIAL-
         echo '{"versions": 
         [
