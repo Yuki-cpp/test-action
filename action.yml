@@ -1,10 +1,12 @@
 name: 'Hello World'
 description: 'Greet someone and record the time'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  registry:  # id of input
+    description: 'Registry repo (owner/repo)'
     required: true
-    default: 'World'
+  token:  # id of input
+    description: 'Git user token'
+    required: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'

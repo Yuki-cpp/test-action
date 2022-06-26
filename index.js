@@ -14,12 +14,14 @@ const github = require('@actions/github');
 
 try {
     // github.context.actor
-    // const clone_command = `git clone https://${username}:${token}@github.com/${username}/${repo}.git`
+    const registry = core.getInput('registry');
+    const token = core.getInput('token');
+    const user = core.getInput('github.context.actor');
 
 
-    // `who-to-greet` input defined in action metadata file
-    const nameToGreet = github.context.actor;
-    console.log(`ARGHHH ${github.context.actor}!`);
+    const clone_command = `git clone https://${user}:${token}@github.com/${registry}.git`
+
+    console.log(`Will do : ${clone_command}`);
     const time = (new Date()).toTimeString();
     core.setOutput("time", time);
     // Get the JSON webhook payload for the event that triggered the workflow
