@@ -1,6 +1,9 @@
 name: "Hello World"
 description: "Greet someone"
 inputs:
+  package:
+    description: "Package to upload to the vcpkg registry"
+    required: true
   registry:
     description: "vcpkg target registry (owner/repository)"
     required: true
@@ -10,18 +13,21 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v3
+    - name: Clone registry
+      uses: actions/checkout@v3
       with:
         repository: ${{ inputs.registry }}
         ssh-key: ${{ inputs.deployment_key }}
         path: "vcpkg-registry"
 
-    - run: |
-        echo "Test" >> tttt
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git add .
-        git commit -m "Update port files"
-        git push
-      shell: bash
+    - name: Do some changes
+      run: echo "Leo" >> tttt
       working-directory: "vcpkg-registry"
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4
+      with:
+        path: "vcpkg-registry"
+        commit-message: "[Automated] Update port for ${{ inputs.package }}"
+        branch: "update/${{ inputs.package }}/version"
+        title: "[Automated] Update port for ${{ inputs.package }}"
