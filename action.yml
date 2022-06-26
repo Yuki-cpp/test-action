@@ -1,11 +1,11 @@
-name: 'Hello World'
-description: 'Greet someone'
+name: "Hello World"
+description: "Greet someone"
 inputs:
   registry:
-    description: 'vcpkg target registry (owner/repository)'
+    description: "vcpkg target registry (owner/repository)"
     required: true
   deployment_key:
-    description: 'SSH Key to use for deployment'
+    description: "SSH Key to use for deployment"
     required: true
 runs:
   using: "composite"
@@ -14,5 +14,12 @@ runs:
       with:
         repository: ${{ inputs.registry }}
         ssh-key: ${{ inputs.deployment_key }}
-        path: 'vcpkg-registry'
+        path: "vcpkg-registry"
 
+    - run: |
+        echo "Test" >> tttt
+        git add .
+        git commit -m "Update port files"
+        git push
+      shell: bash
+      working-directory: "vcpkg-registry"
