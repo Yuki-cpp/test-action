@@ -25,12 +25,19 @@ runs:
       working-directory: "vcpkg-registry"
       shell: bash
 
-    - name: Commit files
-      run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        git checkout -b "update/${{ inputs.package }}/version"
-        git commit -m "Add changes" -a
-        git push -u origin "update/${{ inputs.package }}/version"
-      shell: bash
-      working-directory: "vcpkg-registry"
+    - uses: tibdex/github-app-token@v1
+      id: generate-token
+      with:
+        app_id: ${{ secrets.APP_ID }}
+        private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4
+      with:
+        path: "vcpkg-registry"
+        token: ${{ steps.generate-token.outputs.token }}
+        base: main
+        commit-message: "[Automated] Update port for ${{ inputs.package }}"
+        branch: "update/${{ inputs.package }}/version"
+        title: "[Automated] Update port for ${{ inputs.package }}"
+        delete-branch: true

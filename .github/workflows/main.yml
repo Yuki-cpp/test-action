@@ -11,4 +11,5 @@ jobs:
         with:
           registry: Yuki-cpp/test-vcpkg
           deployment_key: ${{ secrets.DEPLOY_KEY }}
+          token: ${{ secrets.DEPLOY_KEY }}
           package: whatever
