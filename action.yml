@@ -42,6 +42,8 @@ runs:
     # Commit updated port
     - name: Commit port
       run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         mkdir -p ports/${{ inputs.package }}
         touch ports/${{ inputs.package }}/some_file
         git add ports/${{ inputs.package }}
