@@ -73,7 +73,7 @@ runs:
           "default": {
             "${{ inputs.package }}": { "baseline": "${{inputs.package_version}}", "port-version": 0 }
           }
-        }' >> /tmp/baseline.json
+        }' > /tmp/baseline.json
         jq -rs '.[1] * .[0]' versions/baseline.json /tmp/baseline.json > versions/baseline.json
       shell: bash
       working-directory: "vcpkg-registry"
@@ -90,7 +90,7 @@ runs:
               "git-tree": "${{ steps.get-git-tree.outputs.rev }}"
             }
           ]
-        }' >> versions/$INITIAL-/${{ inputs.package }}.json
+        }' > versions/$INITIAL-/${{ inputs.package }}.json
       working-directory: "vcpkg-registry"
       shell: bash
 
