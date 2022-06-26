@@ -73,7 +73,7 @@ runs:
             "git-tree": "${{ steps.get-git-tree.outputs.rev }}"
           }
         ]
-        }'' >> versions/$INITIAL-/${{ inputs.package }}.json
+        }' >> versions/$INITIAL-/${{ inputs.package }}.json
       working-directory: "vcpkg-registry"
       shell: bash
 
