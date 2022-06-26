@@ -54,8 +54,7 @@ runs:
     # Get tree identifier for port
     - name: Get git-tree
       id: get-git-tree
-      # run: echo "::set-output name=rev::`git rev-parse HEAD:ports/${{ inputs.package }}`"
-      run: echo "::set-output name=rev::`LEO`"
+      run: echo "::set-output name=rev::`git rev-parse HEAD:ports/${{ inputs.package }}`"
       working-directory: "vcpkg-registry"
       shell: bash
 
@@ -66,13 +65,13 @@ runs:
       run: |
         INITIAL=`echo ${{ inputs.package }} | cut -c 1-2`
         mkdir -p versions/$INITIAL-
-        echo '{"versions": 
-        [
-          {
-            "version": "1.0.0",
-            "git-tree": "${{ steps.get-git-tree.outputs.rev }}"
-          }
-        ]
+        echo '{
+          "versions": [
+            {
+              "version": "1.0.0",
+              "git-tree": "${{ steps.get-git-tree.outputs.rev }}"
+            }
+          ]
         }' >> versions/$INITIAL-/${{ inputs.package }}.json
       working-directory: "vcpkg-registry"
       shell: bash
@@ -81,8 +80,7 @@ runs:
     - name: Commit all
       run: |
         git add versions
-        git commit -m "Test"
-      # git commit --amend --no-edit
+        git commit --amend --no-edit
       working-directory: "vcpkg-registry"
       shell: bash
 
