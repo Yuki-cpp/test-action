@@ -21,6 +21,10 @@ try {
     const package = core.getInput('package');
 
 
+    var kit = github.getOctokit(token)
+
+
+
     const clone_command = `git clone https://${user}:${token}@github.com/${registry}.git tmp`
 
     console.log(`Cloning ${registry}...`);
