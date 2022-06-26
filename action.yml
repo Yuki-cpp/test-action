@@ -1,14 +1,16 @@
 name: "Hello World"
 description: "Greet someone"
+
 inputs:
   package:
     description: "Package to upload to the vcpkg registry"
     required: true
+  package_version:
+    description: "Version of the package"
+    required: true
+
   registry:
     description: "vcpkg target registry (owner/repository)"
-    required: true
-  deployment_key:
-    description: "SSH Key to use for deployment"
     required: true
   app_id:
     description: "SSH Key to use for deployment"
@@ -16,14 +18,21 @@ inputs:
   app_key:
     description: "SSH Key to use for deployment"
     required: true
+
 runs:
   using: "composite"
   steps:
+    - uses: tibdex/github-app-token@v1
+      id: generate-token
+      with:
+        app_id: ${{ inputs.app_id }}
+        private_key: ${{ inputs.app_key }}
+
     - name: Clone registry
       uses: actions/checkout@v3
       with:
+        token: ${{ steps.generate-token.outputs.token }}
         repository: ${{ inputs.registry }}
-        ssh-key: ${{ inputs.deployment_key }}
         path: "vcpkg-registry"
 
     - name: Do some changes
@@ -31,19 +40,13 @@ runs:
       working-directory: "vcpkg-registry"
       shell: bash
 
-    - uses: tibdex/github-app-token@v1
-      id: generate-token
-      with:
-        app_id: ${{ inputs.app_id }}
-        private_key: ${{ inputs.app_key }}
-
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
       with:
         path: "vcpkg-registry"
         token: ${{ steps.generate-token.outputs.token }}
         base: main
-        commit-message: "[Automated] Update port for ${{ inputs.package }}"
-        branch: "update/${{ inputs.package }}/version"
-        title: "[Automated] Update port for ${{ inputs.package }}"
+        commit-message: "[Automated] Update port for ${{ inputs.package }} ${{inputs.package_version}}"
+        branch: "port-update/${{ inputs.package }}/${{inputs.package_version}}"
+        title: "[Automated] Update port for ${{ inputs.package }} ${{inputs.package_version}}"
         delete-branch: true
