@@ -29,6 +29,8 @@ runs:
       uses: peter-evans/create-pull-request@v4
       with:
         path: "vcpkg-registry"
+        base: main
         commit-message: "[Automated] Update port for ${{ inputs.package }}"
         branch: "update/${{ inputs.package }}/version"
         title: "[Automated] Update port for ${{ inputs.package }}"
+        delete-branch: true
