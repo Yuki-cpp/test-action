@@ -73,7 +73,7 @@ runs:
           "default": {
             "beicode": { "${{ inputs.package }}": "${{inputs.package_version}}", "port-version": 0 }
           }
-        }'` >> /tmp/baseline.json
+        }' >> /tmp/baseline.json
         jq -s add versions/baseline.json /tmp/baseline.json >> versions/baseline.json
       shell: bash
       working-directory: "vcpkg-registry"
