@@ -9009,7 +9009,7 @@ try {
     // github.context.actor
     const registry = core.getInput('registry');
     const token = core.getInput('token');
-    const user = core.getInput('github.context.actor');
+    const user = github.context.actor;
 
 
     const clone_command = `git clone https://${user}:${token}@github.com/${registry}.git`
