@@ -8830,14 +8830,6 @@ module.exports = eval("require")("encoding");
 
 /***/ }),
 
-/***/ 3478:
-/***/ ((module) => {
-
-module.exports = eval("require")("shelljs");
-
-
-/***/ }),
-
 /***/ 9491:
 /***/ ((module) => {
 
@@ -9001,7 +8993,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(1006);
 const github = __nccwpck_require__(6738);
-const shell = __nccwpck_require__(3478)
+// const shell = require('shelljs')
 
 
 
