@@ -17,4 +17,4 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           app_key: ${{ secrets.APP_PRIVATE_KEY }}
           package: whatever
-          package_dependencies_path: ${{GITHUB_WORKSPACE}}/package.json
+          package_dependencies_path: $GITHUB_WORKSPACE/package.json
