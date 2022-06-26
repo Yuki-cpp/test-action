@@ -69,12 +69,12 @@ runs:
     # Add to baseline
     - name: Update baseline
       run: |
-        jq -s add versions/baseline.json `echo '{
+        echo '{
           "default": {
             "beicode": { "${{ inputs.package }}": "${{inputs.package_version}}", "port-version": 0 }
           }
-        }'` >> versions/baseline.json
-
+        }'` >> /tmp/baseline.json
+        jq -s add versions/baseline.json /tmp/baseline.json >> versions/baseline.json
       shell: bash
       working-directory: "vcpkg-registry"
 
