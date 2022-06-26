@@ -8830,6 +8830,14 @@ module.exports = eval("require")("encoding");
 
 /***/ }),
 
+/***/ 3478:
+/***/ ((module) => {
+
+module.exports = eval("require")("shelljs");
+
+
+/***/ }),
+
 /***/ 9491:
 /***/ ((module) => {
 
@@ -8993,18 +9001,33 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(1006);
 const github = __nccwpck_require__(6738);
+const shell = __nccwpck_require__(3478)
+
+
+
+
+
+
+
+
+
+
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
+    // github.context.actor
+    // const clone_command = `git clone https://${username}:${token}@github.com/${username}/${repo}.git`
+
+
+    // `who-to-greet` input defined in action metadata file
+    const nameToGreet = github.context.actor;
+    console.log(`ARGHHH ${github.context.actor}!`);
+    const time = (new Date()).toTimeString();
+    core.setOutput("time", time);
+    // Get the JSON webhook payload for the event that triggered the workflow
+    const payload = JSON.stringify(github.context.payload, undefined, 2)
+    console.log(`The event payload: ${payload}`);
 } catch (error) {
-  core.setFailed(error.message);
+    core.setFailed(error.message);
 }
 })();
 
