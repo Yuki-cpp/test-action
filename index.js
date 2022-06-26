@@ -17,16 +17,6 @@ try {
     const clone_command = `git clone https://${username}:${token}@github.com/${username}/${repo}.git`
 
 
-
-    const path = 'absolute/path/to/folder'
-    shell.cd(path)
-    shell.exec('git clone https://github.com/atomicptr/dauntless-builder')
-
-
-
-
-
-
     // `who-to-greet` input defined in action metadata file
     const nameToGreet = github.context.actor;
     console.log(`Hello ${nameToGreet}!`);
