@@ -23,6 +23,7 @@ runs:
     - name: Do some changes
       run: echo "Leo" >> tttt
       working-directory: "vcpkg-registry"
+      shell: bash
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
