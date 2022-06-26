@@ -41,7 +41,7 @@ runs:
     # Add vcpkg.json
     - name: Add vcpkg.json
       run: |
-        mkdir -p ports/${{ inputs.package }}
+        mkdir -p vcpkg-registry/ports/${{ inputs.package }}
         cp ${{ inputs.package_dependencies_path }} vcpkg-registry/ports/${{ inputs.package }}
       shell: bash
 
