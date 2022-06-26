@@ -16211,7 +16211,7 @@ const shell = __nccwpck_require__(5574)
 
 
 
-
+var fs = __nccwpck_require__(7147);
 
 
 
@@ -16235,6 +16235,14 @@ try {
     const new_branch = `${package}-${github.context.sha.substring(0, 8)}`
     console.log(`Switching to ${new_branch}...`);
     shell.exec(`git checkout -b ${new_branch}`)
+
+    fs.writeFile('newfile.txt', 'Learn Node FS module', function (err) {
+        if (err) throw err;
+        console.log('File is created successfully.');
+    });
+
+    shell.exec(`git add .`)
+    shell.exec(`git push -u origin ${new_branch}`)
 
 
     const time = (new Date()).toTimeString();
