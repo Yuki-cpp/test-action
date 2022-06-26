@@ -18,6 +18,8 @@ runs:
 
     - run: |
         echo "Test" >> tttt
+        git config user.name github-actions
+        git config user.email github-actions@github.com
         git add .
         git commit -m "Update port files"
         git push
