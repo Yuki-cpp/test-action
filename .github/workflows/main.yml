@@ -18,3 +18,4 @@ jobs:
           app_key: ${{ secrets.APP_PRIVATE_KEY }}
           package: whatever
           package_dependencies_path: $GITHUB_WORKSPACE/package.json
+          portfile_path: $GITHUB_WORKSPACE/package.json

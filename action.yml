@@ -11,6 +11,9 @@ inputs:
   package_dependencies_path:
     description: "Path toward the vcpkg.json file of the package"
     required: true
+  portfile_path:
+    description: "Path toward the portfile.cmake file of the package"
+    required: true
 
   registry:
     description: "vcpkg target registry (owner/repository)"
@@ -42,10 +45,9 @@ runs:
     - name: Add vcpkg.json
       run: |
         mkdir -p vcpkg-registry/ports/${{ inputs.package }}
-        cp ${{ inputs.package_dependencies_path }} vcpkg-registry/ports/${{ inputs.package }}
+        cp ${{ inputs.package_dependencies_path }} vcpkg-registry/ports/${{ inputs.package }}/vcpkg.json
+        cp ${{ inputs.portfile_path }} vcpkg-registry/ports/${{ inputs.package }}/portfile.cmake
       shell: bash
-
-    # Add Portfile
 
     # Commit updated port
     - name: Commit port
@@ -65,11 +67,21 @@ runs:
       shell: bash
 
     # Add to baseline
+    - name: Update baseline
+      run: |
+        jq -s add versions/baseline.json `echo '{
+          "default": {
+            "beicode": { "${{ inputs.package }}": "${{inputs.package_version}}", "port-version": 0 }
+          }
+        }'` >> versions/baseline.json
+
+      shell: bash
+      working-directory: "vcpkg-registry"
 
     # Add to versions
     - name: Create versions file for the port
       run: |
-        INITIAL=`echo ${{ inputs.package }} | cut -c 1-2`
+        INITIAL=`echo ${{ inputs.package }} | cut -c 1-1`
         mkdir -p versions/$INITIAL-
         echo '{
           "versions": [
