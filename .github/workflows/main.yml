@@ -5,6 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Does stuff
     steps:
+      - name: Clone repo
+        uses: actions/checkout@v3
+
       - name: Hello world action step
         id: hello
         uses: Yuki-cpp/test-action@main
@@ -14,3 +17,4 @@ jobs:
           app_id: ${{ secrets.APP_ID }}
           app_key: ${{ secrets.APP_PRIVATE_KEY }}
           package: whatever
+          package_dependencies_path: ${{GITHUB_WORKSPACE}}/package.json

@@ -8,6 +8,9 @@ inputs:
   package_version:
     description: "Version of the package"
     required: true
+  package_dependencies_path:
+    description: "Path toward the vcpkg.json file of the package"
+    required: true
 
   registry:
     description: "vcpkg target registry (owner/repository)"
@@ -35,17 +38,20 @@ runs:
         repository: ${{ inputs.registry }}
         path: "vcpkg-registry"
 
-    # Add Portfile
-
     # Add vcpkg.json
+    - name: Add vcpkg.json
+      run: |
+        mkdir -p ports/${{ inputs.package }}
+        cp ${{ inputs.package_dependencies_path }} vcpkg-registry/ports/${{ inputs.package }}
+      shell: bash
+
+    # Add Portfile
 
     # Commit updated port
     - name: Commit port
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        mkdir -p ports/${{ inputs.package }}
-        touch ports/${{ inputs.package }}/some_file
         git add ports/${{ inputs.package }}
         git commit -m "[${{ inputs.package }}] new port"
       working-directory: "vcpkg-registry"
@@ -68,7 +74,7 @@ runs:
         echo '{
           "versions": [
             {
-              "version": "1.0.0",
+              "version": "${{inputs.package_version}}",
               "git-tree": "${{ steps.get-git-tree.outputs.rev }}"
             }
           ]
