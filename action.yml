@@ -35,8 +35,50 @@ runs:
         repository: ${{ inputs.registry }}
         path: "vcpkg-registry"
 
-    - name: Do some changes
-      run: echo "Leo" >> tttt
+    # Add Portfile
+
+    # Add vcpkg.json
+
+    # Commit updated port
+    - name: Commit port
+      run: |
+        git add ports/${{ inputs.package }}
+        git commit -m "[${{ inputs.package }}] new port"
+      working-directory: "vcpkg-registry"
+      shell: bash
+
+    # Get tree identifier for port
+    - name: Get git-tree
+      id: get-git-tree
+      # run: echo "::set-output name=rev::`git rev-parse HEAD:ports/${{ inputs.package }}`"
+      run: echo "::set-output name=rev::`LEO`"
+      working-directory: "vcpkg-registry"
+      shell: bash
+
+    # Add to baseline
+
+    # Add to versions
+    - name: Create versions file for the port
+      run: |
+        INITIAL=`echo ${{ inputs.package }} | cut -c 0-1`
+        mkdir -p versions/$INITIAL-
+        echo '{"versions": 
+        [
+          {
+            "version": "1.0.0",
+            "git-tree": "${{ steps.get-git-tree.outputs.rev }}"
+          }
+        ]
+        }'' >> versions/$INITIAL-/${{ inputs.package }}.json
+      working-directory: "vcpkg-registry"
+      shell: bash
+
+    # Commit versions
+    - name: Commit all
+      run: |
+        git add versions
+        git commit -m "Test"
+      # git commit --amend --no-edit
       working-directory: "vcpkg-registry"
       shell: bash
 
