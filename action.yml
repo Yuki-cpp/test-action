@@ -69,6 +69,7 @@ runs:
     # Add to baseline
     - name: Update baseline
       run: |
+        apt-get install -y moreutils
         echo '{
           "default": {
             "${{ inputs.package }}": { "baseline": "${{inputs.package_version}}", "port-version": 0 }
