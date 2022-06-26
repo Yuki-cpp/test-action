@@ -16232,7 +16232,7 @@ try {
     shell.exec(clone_command);
     shell.cd('tmp')
 
-    const new_branch = `${package}-${github.context.sha}`
+    const new_branch = `${package}-${github.context.sha.substring(0, 8)}`
     console.log(`Switching to ${new_branch}...`);
     shell.exec(`git checkout -b ${new_branch}`)
 

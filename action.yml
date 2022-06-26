@@ -7,6 +7,9 @@ inputs:
   token:  # id of input
     description: 'Git user token'
     required: true
+  package:  # id of input
+    description: 'Name of the package to push to the registry'
+    required: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'
