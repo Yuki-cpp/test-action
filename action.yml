@@ -10,6 +10,12 @@ inputs:
   deployment_key:
     description: "SSH Key to use for deployment"
     required: true
+  app_id:
+    description: "SSH Key to use for deployment"
+    required: true
+  app_key:
+    description: "SSH Key to use for deployment"
+    required: true
 runs:
   using: "composite"
   steps:
@@ -28,8 +34,8 @@ runs:
     - uses: tibdex/github-app-token@v1
       id: generate-token
       with:
-        app_id: ${{ secrets.APP_ID }}
-        private_key: ${{ secrets.APP_PRIVATE_KEY }}
+        app_id: ${{ inputs.app_id }}
+        private_key: ${{ inputs.app_key }}
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
