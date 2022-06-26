@@ -74,8 +74,7 @@ runs:
             "${{ inputs.package }}": { "baseline": "${{inputs.package_version}}", "port-version": 0 }
           }
         }' >> /tmp/baseline.json
-        cat versions/baseline.json /tmp/baseline.json | jq --slurp 'reduce .[] as $item ({}; . * $item)' >> versions/baseline.json
-      #  jq -s '.[1] * .[0]' versions/baseline.json /tmp/baseline.json >> versions/baseline.json
+        jq -rs '.[1] * .[0]' versions/baseline.json /tmp/baseline.json >> versions/baseline.json
       shell: bash
       working-directory: "vcpkg-registry"
 
