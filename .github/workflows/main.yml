@@ -9,7 +9,7 @@ jobs:
         id: hello
         uses: Yuki-cpp/test-action@main
         with:
-          version: 3.0.3
+          package_version: 3.0.3
           registry: Yuki-cpp/test-vcpkg
           app_id: ${{ secrets.APP_ID }}
           app_key: ${{ secrets.APP_PRIVATE_KEY }}
