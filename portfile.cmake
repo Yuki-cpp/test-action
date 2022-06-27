@@ -1,8 +1,8 @@
 vcpkg_from_github(
   OUT_SOURCE_PATH SOURCE_PATH
   REPO Yuki-cpp/typelist_utils
-  REF [[REF]]
-  SHA512 [[SHA]]
+  REF COMMIT_REF
+  SHA512 ARCHIVE_SHA
   HEAD_REF master
 )
 
