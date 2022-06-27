@@ -42,11 +42,20 @@ runs:
         path: "vcpkg-registry"
 
     # Add vcpkg.json
-    - name: Add vcpkg.json
+    - name: Add vcpkg.json and portfile
       run: |
         mkdir -p vcpkg-registry/ports/${{ inputs.package }}
         cp ${{ inputs.package_dependencies_path }} vcpkg-registry/ports/${{ inputs.package }}/vcpkg.json
         cp ${{ inputs.portfile_path }} vcpkg-registry/ports/${{ inputs.package }}/portfile.cmake
+      shell: bash
+
+    - name: Update portfile
+      run: |
+        sed -i 's/[[REF]]/${{inputs.package_version}}/' ports/${{ inputs.package }}/portfile.cmake
+        wgethttps://github.com/${github.repository}/archive/${{inputs.package_version}}.tar.gz -O /tmp/archive.tar.gz
+        SHA=`sha512sum /tmp/archive.tar.gz  | grep -Eo '^\w+'`
+        sed -i 's/[[SHA]]/$SHA/' ports/${{ inputs.package }}/portfile.cmake
+      working-directory: "vcpkg-registry"
       shell: bash
 
     # Commit updated port
