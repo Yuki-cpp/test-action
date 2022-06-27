@@ -16,9 +16,9 @@ jobs:
 
       - name: Hello world action step
         id: hello
-        uses: Yuki-cpp/test-action@main
+        uses: cpp-playground/upload-to-vcpkg-registry@main
         with:
-          registry: cpp-playground/upload-to-vcpkg-registry
+          registry: Yuki-cpp/test-vcpkg
           registry_access_token:  ${{ steps.generate-token.outputs.token }}
           package_name: super-pkg
           package_version: 1.0.0
