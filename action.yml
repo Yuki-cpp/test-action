@@ -51,10 +51,9 @@ runs:
 
     - name: Update portfile
       run: |
-        sed -i 's/[[REF]]/${{inputs.package_version}}/' ports/${{ inputs.package }}/portfile.cmake
+        sed -i 's/COMMIT_REF/${{inputs.package_version}}/' ports/${{ inputs.package }}/portfile.cmake
         wget https://github.com/${{github.repository}}/archive/${{inputs.package_version}}.tar.gz -O /tmp/archive.tar.gz
-        SHA=`sha512sum /tmp/archive.tar.gz  | grep -Eo '^\w+'`
-        sed -i 's/[[SHA]]/$SHA/' ports/${{ inputs.package }}/portfile.cmake
+        sed -i "s/ARCHIVE_SHA/`sha512sum /tmp/archive.tar.gz  | grep -Eo '^\w+'`/" ports/${{ inputs.package }}/portfile.cmake
       working-directory: "vcpkg-registry"
       shell: bash
 
