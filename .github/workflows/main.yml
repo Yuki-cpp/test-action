@@ -8,14 +8,19 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@v3
 
+      - uses: tibdex/github-app-token@v1
+        id: generate-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Hello world action step
         id: hello
         uses: Yuki-cpp/test-action@main
         with:
+          registry: cpp-playground/upload-to-vcpkg-registry
+          registry_access_token:  ${{ steps.generate-token.outputs.token }}
+          package_name: super-pkg
           package_version: 1.0.0
-          registry: Yuki-cpp/test-vcpkg
-          app_id: ${{ secrets.APP_ID }}
-          app_key: ${{ secrets.APP_PRIVATE_KEY }}
-          package: super-pkg
-          package_dependencies_path: $GITHUB_WORKSPACE/package.json
-          portfile_path: $GITHUB_WORKSPACE/portfile.cmake
+          package_dep_file: $GITHUB_WORKSPACE/package.json
+          package_port_file: $GITHUB_WORKSPACE/portfile.cmake
