@@ -3,7 +3,7 @@ vcpkg_from_github(
   REPO Yuki-cpp/typelist_utils
   REF COMMIT_REF
   SHA512 ARCHIVE_SHA
-  HEAD_REF master
+  HEAD_REF HEAD_BRANCH
 )
 
 vcpkg_configure_cmake(
