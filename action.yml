@@ -14,6 +14,10 @@ inputs:
   portfile_path:
     description: "Path toward the portfile.cmake file of the package"
     required: true
+  head_branch:
+    description: "Path toward the portfile.cmake file of the package"
+    default: "main"
+    required: false
 
   registry:
     description: "vcpkg target registry (owner/repository)"
@@ -51,9 +55,10 @@ runs:
 
     - name: Update portfile
       run: |
-        sed -i 's/COMMIT_REF/${{inputs.package_version}}/' ports/${{ inputs.package }}/portfile.cmake
         wget https://github.com/${{github.repository}}/archive/${{inputs.package_version}}.tar.gz -O /tmp/archive.tar.gz
+        sed -i 's/COMMIT_REF/${{inputs.package_version}}/' ports/${{ inputs.package }}/portfile.cmake
         sed -i "s/ARCHIVE_SHA/`sha512sum /tmp/archive.tar.gz  | grep -Eo '^\w+'`/" ports/${{ inputs.package }}/portfile.cmake
+        sed -i 's/HEAD_BRANCH/${{inputs.head_branch}}/' ports/${{ inputs.package }}/portfile.cmake
       working-directory: "vcpkg-registry"
       shell: bash
 
