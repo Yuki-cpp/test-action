@@ -12,7 +12,7 @@ jobs:
         id: hello
         uses: Yuki-cpp/test-action@main
         with:
-          package_version: 0.0.21
+          package_version:1.0.0
           registry: Yuki-cpp/test-vcpkg
           app_id: ${{ secrets.APP_ID }}
           app_key: ${{ secrets.APP_PRIVATE_KEY }}
